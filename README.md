@@ -1,6 +1,7 @@
 # Amplitude REST API Connector
 
-One Paragraph of project description goes here
+This is a simple library for connecting to [Amplitude's REST API](https://amplitude.zendesk.com/hc/en-us/articles/205469748-Dashboard-Rest-API-Export-Amplitude-Dashboard-Data#query-parameters ) with Python. All responces from the API are converted into Pandas data frames. 
+You can also give a try to [marmuar's Pyamplitude library] (https://github.com/marmurar/pyamplitude).
 
 ## Getting Started
 
