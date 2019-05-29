@@ -25,7 +25,7 @@ In case you have troubles installing pycurl, please follow [this instruction](ht
 
 ```json
 {
-	"apiKey":		"%YOUR_API_KEY_HERE%",
+	"apiKey":	"%YOUR_API_KEY_HERE%",
 	"secretKey":	"%YOUR_SECREY_KEY_HERE%"
 }
 ```
@@ -44,65 +44,63 @@ from amplitude_API import *
 amplitude = amplitudeAPI('amplitude_config.json')
 ```
 
+## Documentation
 
-And repeat
+### Library structure
+- amplitudeEvent
+- amplitudeSegment
+- amplitudeUserPropertyGroupBy
+- amplitudeAPI
 
-```
-until finished
-```
+### amplitudeAPI methods
+- queryApi
+- getEvents
+- getDataFromExistingDashboard
+- getAnnotations
+- getUserActivity
+- getLTV
+- getRetention
+- getFunnel
+- getEventSegmentation
+- getEventUniques
+- getEventTotals
+- getEventPropSum
+- getEventFullData
+- getSessionLengthDistro
+- getSessionAvgLength
+- getSessionAvgPerUser
 
-End with an example of getting some data out of the system or using it for a little demo
+#### getDataFromExistingDashboard
+#### getAnnotations
+#### getUserActivity
+#### getLTV
+#### getRetention
+#### getFunnel
+#### getEventSegmentation
+#### getEventUniques
+#### getEventTotals
+#### getEventPropSum
+#### getEventFullData
+#### getSessionLengthDistro
+#### getSessionAvgLength
+#### getSessionAvgPerUser
+
+## Known limitations
+1. 
+2. It's unclear from Amplitudes REST API documentation how to make user segments, reffering to only new users:
+?????????????????????????????????????
 
 ## Running the tests
 
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+This project doesn't have any tests implemented primarily because Amplitude's free demos don't support REST API.
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+* **Vyacheslav Zotov** - *Initial work* - [vyacheslav-zotov](https://github.com/vyacheslav-zotov)
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
-## Acknowledgments
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+
