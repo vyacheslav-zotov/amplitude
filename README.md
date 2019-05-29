@@ -3,26 +3,47 @@
 This is a simple library for connecting to [Amplitude's REST API](https://amplitude.zendesk.com/hc/en-us/articles/205469748-Dashboard-Rest-API-Export-Amplitude-Dashboard-Data#query-parameters ) with Python. All responces from the API are converted into Pandas data frames. 
 You can also give a try to [marmurar's Pyamplitude library](https://github.com/marmurar/pyamplitude).
 
+The main goal of the project is to help product analysts from getting lost in swarms of identical Amplitude dashboards.
+
 ## Getting Started
 
 ### Prerequisites
 
-Before you start please install the following libraries:
+This library was developed under Python 3.6.7 and Ubuntu 18.04.1 LTS.
 
+Before you start please install the following libraries:
 - pycurl
 - pandas
 
-In case you have troubles installing pycurl, please follow [this instruction:](https://stackoverflow.com/questions/37669428/error-in-installation-pycurl-7-19-0)
+In case you have troubles installing pycurl, please follow [this instruction](https://stackoverflow.com/questions/37669428/error-in-installation-pycurl-7-19-0).
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
+1. Download and extract amplitude_API.py and amplitude_config.json project's files into your project directory;
+2. Find your Amplitude API Key and Secret Key. For this, in Amplitude go to Manage Data -> %YOUR_PROJECT% -> Project settings;
+3. Modify amplitude_config.json like this:
 
-Say what the step will be
+```json
+{
+	"apiKey":		"%YOUR_API_KEY_HERE%",
+	"secretKey":	"%YOUR_SECREY_KEY_HERE%"
+}
+```
 
+4. Import the library to your project:
+
+```python
+from amplitude_API import *
+amplitude = amplitudeAPI('amplitude_config.json')
 ```
-Give the example
+
+5. Query sample data:
+
+```python
+from amplitude_API import *
+amplitude = amplitudeAPI('amplitude_config.json')
 ```
+
 
 And repeat
 
