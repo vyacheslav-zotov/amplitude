@@ -47,10 +47,30 @@ amplitude = amplitudeAPI('amplitude_config.json')
 ## Documentation
 
 ### Library structure
-- amplitudeEvent - 
+- amplitudeEvent - a proxy class, implementing Amplitude's event filtering and grouping logic. For example, a structure like this:
+
+![alt text](https://github.com/vyacheslav-zotov/amplitude/blob/master/docs/event_example.jpg "Event example")
+
+can be translated into: 
+
+```python
+followPlaylist = amplitudeEvent('Follow Playlist')
+followPlaylist.andIs('Country', ['United%20States', 'Germany'])
+followPlaylist.andIsNot('Genre_Type', ['Rock', 'HipHop'])
+followPlaylist.groupBy('user', ['device_type']) #see AMPL_SYSTEM_PROPERTIES constant for Amplitude system property aliases
+followPlaylist.groupBy('event', ['Source'])
+#
+```
+
 - amplitudeSegment - ????????
+
+![alt text](https://github.com/vyacheslav-zotov/amplitude/blob/master/docs/group_by_example.jpg "Segment example")
+
 - amplitudeUserPropertyGroupBy - ????????
-- amplitudeAPI - ????????
+
+![alt text](https://github.com/vyacheslav-zotov/amplitude/blob/master/docs/segment_example.jpg "Group by example")
+
+- amplitudeAPI - the main class, implementing all interactions with Amplitude's REST API;
 
 ### amplitudeAPI methods
 - queryApi - a core method providing all interactions between the library and Amplitude's API
