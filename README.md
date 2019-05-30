@@ -47,28 +47,28 @@ amplitude = amplitudeAPI('amplitude_config.json')
 ## Documentation
 
 ### Library structure
-- amplitudeEvent - ????????
+- amplitudeEvent - 
 - amplitudeSegment - ????????
 - amplitudeUserPropertyGroupBy - ????????
 - amplitudeAPI - ????????
 
 ### amplitudeAPI methods
-- queryApi - ????????
-- getEvents - ????????
-- getDataFromExistingDashboard - ????????
-- getAnnotations - ????????
-- getUserActivity - ????????
-- getLTV - ????????
-- getRetention - ????????
-- getFunnel - ????????
-- getEventSegmentation - ????????
-- getEventUniques - ????????
-- getEventTotals - ????????
-- getEventPropSum - ????????
-- getEventFullData - ????????
-- getSessionLengthDistro - ????????
-- getSessionAvgLength - ????????
-- getSessionAvgPerUser - ????????
+- queryApi - a core method providing all interactions between the library and Amplitude's API
+- getEvents - returns a list of all events available for a given project (see [API reference](https://amplitude.zendesk.com/hc/en-us/articles/205469748-Dashboard-Rest-API-Export-Amplitude-Dashboard-Data#events-list));
+- getDataFromExistingDashboard - returns the data from a pre-defined dashboard (see [API reference](https://amplitude.zendesk.com/hc/en-us/articles/205469748-Dashboard-Rest-API-Export-Amplitude-Dashboard-Data#results-from-an-existing-chart));
+- getAnnotations - returns a list of user-defined annotations (see [API reference](https://amplitude.zendesk.com/hc/en-us/articles/205469748-Dashboard-Rest-API-Export-Amplitude-Dashboard-Data#annotations)); 
+- getUserActivity - returns event history for a given user (see [API reference](https://amplitude.zendesk.com/hc/en-us/articles/205469748-Dashboard-Rest-API-Export-Amplitude-Dashboard-Data#user-activity));
+- getLTV - queries LTV data (see [API reference](https://amplitude.zendesk.com/hc/en-us/articles/205469748-Dashboard-Rest-API-Export-Amplitude-Dashboard-Data#revenue%C2%A0ltv));
+- getRetention - gets retention information (see [API reference](https://amplitude.zendesk.com/hc/en-us/articles/205469748-Dashboard-Rest-API-Export-Amplitude-Dashboard-Data#retention-analysis));
+- getFunnel - a generalized procedure for creating event funnels (see [API reference](https://amplitude.zendesk.com/hc/en-us/articles/205469748-Dashboard-Rest-API-Export-Amplitude-Dashboard-Data#funnel-analysis));
+- getEventSegmentation - a core function for querying event time series from Amplitude (see [API reference](https://amplitude.zendesk.com/hc/en-us/articles/205469748-Dashboard-Rest-API-Export-Amplitude-Dashboard-Data#event-segmentation));
+- getEventUniques - queries DAU for a given event (see [API reference](https://amplitude.zendesk.com/hc/en-us/articles/205469748-Dashboard-Rest-API-Export-Amplitude-Dashboard-Data#event-segmentation));
+- getEventTotals - retruns total counts for a given event (see [API reference](https://amplitude.zendesk.com/hc/en-us/articles/205469748-Dashboard-Rest-API-Export-Amplitude-Dashboard-Data#event-segmentation));
+- getEventPropSum - applies a given formula (e.g. PROPSUM) to a selected event (see [API reference](https://amplitude.zendesk.com/hc/en-us/articles/205469748-Dashboard-Rest-API-Export-Amplitude-Dashboard-Data#event-segmentation));
+- getEventFullData - returns DAU, total event counts and PROPSUM for a given event and event property (e.g. $price). Basically, this procedure combines the results from getEventUniques, getEventTotals and getEventPropSum in a single data frame;
+- getSessionLengthDistro - gets a distribution of sessions lengths for a given time frame (see [API reference](https://amplitude.zendesk.com/hc/en-us/articles/205469748-Dashboard-Rest-API-Export-Amplitude-Dashboard-Data#session-length-distribution));
+- getSessionAvgLength - queries average session length (see [API reference](https://amplitude.zendesk.com/hc/en-us/articles/205469748-Dashboard-Rest-API-Export-Amplitude-Dashboard-Data#average-session-length));
+- getSessionAvgPerUser - returns an average number of induvidual sessions (see [API reference](https://amplitude.zendesk.com/hc/en-us/articles/205469748-Dashboard-Rest-API-Export-Amplitude-Dashboard-Data#average-sessions-per-user));
 
 #### getDataFromExistingDashboard
 ?????????????? Examples here
@@ -105,7 +105,8 @@ amplitude = amplitudeAPI('amplitude_config.json')
 - User composition;
 - User search;
 - Real time active users;
-2. It's unclear from Amplitudes REST API documentation how to make user segments, reffering to only new users:
+2. Query cost calculations aren't implemented yet (as for 5/30/2019);
+3. It's unclear from Amplitudes REST API documentation how to make user segments, reffering to only new users:
 ![alt text](https://github.com/vyacheslav-zotov/amplitude/blob/master/docs/new_segment.jpg "New users only segment")
 
 ## Running the tests
