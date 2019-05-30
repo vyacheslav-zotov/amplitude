@@ -106,7 +106,7 @@ amplitude = amplitudeAPI('amplitude_config.json')
 - User search;
 - Real time active users;
 2. It's unclear from Amplitudes REST API documentation how to make user segments, reffering to only new users:
-?????????????????????????????????????
+![alt text](https://github.com/vyacheslav-zotov/amplitude/blob/master/docs/new_segment.jpg "New users only segment")
 
 ## Running the tests
 
