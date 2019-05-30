@@ -55,16 +55,23 @@ can be translated into:
 
 ```python
 followPlaylist = amplitudeEvent('Follow Playlist')
-followPlaylist.andIs('Country', ['United%20States', 'Germany'])
-followPlaylist.andIsNot('Genre_Type', ['Rock', 'HipHop'])
+followPlaylist.andIs('user', 'Country', ['United%20States', 'Germany'])
+followPlaylist.andIsNot('event', 'Genre_Type', ['Rock', 'HipHop'])
 followPlaylist.groupBy('user', ['device_type']) #see AMPL_SYSTEM_PROPERTIES constant for Amplitude system property aliases
-followPlaylist.groupBy('event', ['Source'])
-#
+followPlaylist.groupBy('event', ['Source']) #Amplitude's REST API allows up to 2 group-by dimensions
 ```
 
-- amplitudeSegment - ????????
+- amplitudeSegment - another proxy class, implementing Amplitude's user segment logic. For example, a segment like this:
 
 ![alt text](https://github.com/vyacheslav-zotov/amplitude/blob/master/docs/group_by_example.jpg "Segment example")
+
+can be defined as:
+
+```python
+sfUsers = amplitudeSegment()
+sfUsers.andIs('City', ['San%20Francisco'])
+sfUsers.andIs('Version', ['1.0', '1.1'])
+```
 
 - amplitudeUserPropertyGroupBy - ????????
 
