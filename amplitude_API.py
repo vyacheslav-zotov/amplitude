@@ -348,8 +348,6 @@ class amplitudeAPI:
 					   'label', 
 					   'details']]
 
-	#returns annotations
-	#default filter is set to major releases by default
 	def getUserActivity(self, 
 						amplitudeUserId, 
 						offset = 0, 
@@ -398,13 +396,13 @@ class amplitudeAPI:
 	def getLTV(self,  
 			   startDt, 
 			   finishDt, 
-			   #frequency = AMPL_FREQ_DAILY, 
-			   #metric = AMPL_LTV_METRIC_ARPPU,
+			   frequency = AMPL_FREQ_DAILY, 
+			   metric = AMPL_LTV_METRIC_ARPPU,
 			   segment = None,
 			   groupBy = None):
 
-		frequency = AMPL_FREQ_DAILY
-		metric = AMPL_LTV_METRIC_ARPPU             #we can reconstruct all other metrics from ARPPU
+		#frequency = AMPL_FREQ_DAILY
+		#metric = AMPL_LTV_METRIC_ARPPU             #we can reconstruct all other metrics from ARPPU
 		startDt = startDt.replace('-', '')
 		finishDt = finishDt.replace('-', '')
 
@@ -565,8 +563,7 @@ class amplitudeAPI:
 	def getRetention(self,  
 					 startDt, 
 				 	 finishDt, 
-				     #frequency = AMPL_FREQ_DAILY, 
-					 #metric = AMPL_LTV_METRIC_ARPPU,
+				     frequency = AMPL_FREQ_DAILY, 
 					 segment = None,
 					 groupBy = None):
 
@@ -574,7 +571,6 @@ class amplitudeAPI:
 		returnAction = '_all'  #re=\{"event_type":"Play%20Song%20or%20Video"\}
 		retentionMode = None   #'n-day'
 		retentionBracket = None
-		frequency = AMPL_FREQ_DAILY
 
 		startDt = startDt.replace('-', '')
 		finishDt = finishDt.replace('-', '')
@@ -641,17 +637,13 @@ class amplitudeAPI:
 				  funnel,
 				  startDt, 
 				  finishDt, 
-				  #mode = 'ordered',
+				  mode = 'ordered',
 				  new = 'new',  					#active
 				  segment = None,
 				  groupBy = None,	
-				  #conversionWindow = 2592000,		#30 days	 
-				  #limit = 1000, 					#number of group by values returned				   
+				  conversionWindow = 2592000,		#30 days	 
+				  limit = 1000, 					#number of group by values returned				   
 				  ):
-
-		mode = 'ordered'
-		conversionWindow = 2592000
-		limit = 1000
 
 		startDt = startDt.replace('-', '')
 		finishDt = finishDt.replace('-', '')
@@ -703,17 +695,13 @@ class amplitudeAPI:
 							 finishDt, 
 							 frequency = AMPL_FREQ_DAILY, 
 							 metric = AMPL_METRIC_FORMULA, 			#probably everything can be expressed by a formula
-							 #limit = 1000, 					    #number of group by values returned
+							 limit = 1000, 					        #number of group by values returned
 							 segment = None,
 							 groupBy = None,
 							 formula = AMPL_FORMULA_UNIQUES, 		#only a single formula is supported
-							 #rollingWindow = None
-							 #rollingAverage = None
+							 rollingWindow = None
+							 rollingAverage = None
 							 ): 
-
-		rollingWindow = None
-		rollingAverage = None
-		limit = 1000 												#number of group by values returned
 
 		startDt = startDt.replace('-', '')
 		finishDt = finishDt.replace('-', '')
