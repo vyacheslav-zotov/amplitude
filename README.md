@@ -73,9 +73,15 @@ sfUsers.andIs('City', ['San%20Francisco'])
 sfUsers.andIs('Version', ['1.0', '1.1'])
 ```
 
-- amplitudeUserPropertyGroupBy - ????????
+- amplitudeUserPropertyGroupBy - yet another proxy class, implementing Amplityde's group by user property logic (group by section under segment definitions):
 
 ![alt text](https://github.com/vyacheslav-zotov/amplitude/blob/master/docs/group_by_example.jpg "Group by example")
+
+this group by can be represented as:
+
+```python
+groupByDeviceType = amplitudeUserPropertyGroupBy(['device_type'])
+```
 
 - amplitudeAPI - the main class, implementing all interactions with Amplitude's REST API;
 
