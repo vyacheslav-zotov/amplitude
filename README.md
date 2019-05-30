@@ -63,7 +63,7 @@ followPlaylist.groupBy('event', ['Source']) #Amplitude's REST API allows up to 2
 
 - amplitudeSegment - another proxy class, implementing Amplitude's user segment logic. For example, a segment like this:
 
-![alt text](https://github.com/vyacheslav-zotov/amplitude/blob/master/docs/group_by_example.jpg "Segment example")
+![alt text](https://github.com/vyacheslav-zotov/amplitude/blob/master/docs/segment_example.jpg "Segment example")
 
 can be defined as:
 
@@ -75,7 +75,7 @@ sfUsers.andIs('Version', ['1.0', '1.1'])
 
 - amplitudeUserPropertyGroupBy - ????????
 
-![alt text](https://github.com/vyacheslav-zotov/amplitude/blob/master/docs/segment_example.jpg "Group by example")
+![alt text](https://github.com/vyacheslav-zotov/amplitude/blob/master/docs/group_by_example.jpg "Group by example")
 
 - amplitudeAPI - the main class, implementing all interactions with Amplitude's REST API;
 
