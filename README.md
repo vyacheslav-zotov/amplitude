@@ -47,15 +47,48 @@ amplitude = amplitudeAPI('amplitude_config.json')
 ## Documentation
 
 ### Library structure
-- amplitudeEvent - 
-- amplitudeSegment - ????????
-- amplitudeUserPropertyGroupBy - ????????
-- amplitudeAPI - ????????
+- amplitudeEvent - a proxy class, implementing Amplitude's event filtering and grouping logic. For example, a structure like this:
+
+![alt text](https://github.com/vyacheslav-zotov/amplitude/blob/master/docs/event_example.jpg "Event example")
+
+can be translated into: 
+
+```python
+followPlaylist = amplitudeEvent('Follow Playlist')
+followPlaylist.andIs('user', 'Country', ['United%20States', 'Germany'])
+followPlaylist.andIsNot('event', 'Genre_Type', ['Rock', 'HipHop'])
+followPlaylist.groupBy('user', ['device_type']) #see AMPL_SYSTEM_PROPERTIES constant for Amplitude system property aliases
+followPlaylist.groupBy('event', ['Source']) #Amplitude's REST API allows up to 2 group-by dimensions
+```
+
+- amplitudeSegment - another proxy class, implementing Amplitude's user segment logic. For example, a segment like this:
+
+![alt text](https://github.com/vyacheslav-zotov/amplitude/blob/master/docs/segment_example.jpg "Segment example")
+
+can be defined as:
+
+```python
+sfUsers = amplitudeSegment()
+sfUsers.andIs('City', ['San%20Francisco'])
+sfUsers.andIs('Version', ['1.0', '1.1'])
+```
+
+- amplitudeUserPropertyGroupBy - yet another proxy class, implementing Amplityde's group by user property logic (group by section under segment definitions):
+
+![alt text](https://github.com/vyacheslav-zotov/amplitude/blob/master/docs/group_by_example.jpg "Group by example")
+
+this group by can be represented as:
+
+```python
+groupByDeviceType = amplitudeUserPropertyGroupBy(['device_type'])
+```
+
+- amplitudeAPI - the main class, implementing all interactions with Amplitude's REST API;
 
 ### amplitudeAPI methods
 - queryApi - a core method providing all interactions between the library and Amplitude's API
 - getEvents - returns a list of all events available for a given project (see [API reference](https://amplitude.zendesk.com/hc/en-us/articles/205469748-Dashboard-Rest-API-Export-Amplitude-Dashboard-Data#events-list));
-- getDataFromExistingDashboard - returns the data from a pre-defined dashboard (see [API reference](https://amplitude.zendesk.com/hc/en-us/articles/205469748-Dashboard-Rest-API-Export-Amplitude-Dashboard-Data#results-from-an-existing-chart));
+- getDataFromExistingChart - returns the data from a pre-defined chart (see [API reference](https://amplitude.zendesk.com/hc/en-us/articles/205469748-Dashboard-Rest-API-Export-Amplitude-Dashboard-Data#results-from-an-existing-chart));
 - getAnnotations - returns a list of user-defined annotations (see [API reference](https://amplitude.zendesk.com/hc/en-us/articles/205469748-Dashboard-Rest-API-Export-Amplitude-Dashboard-Data#annotations)); 
 - getUserActivity - returns event history for a given user (see [API reference](https://amplitude.zendesk.com/hc/en-us/articles/205469748-Dashboard-Rest-API-Export-Amplitude-Dashboard-Data#user-activity));
 - getLTV - queries LTV data (see [API reference](https://amplitude.zendesk.com/hc/en-us/articles/205469748-Dashboard-Rest-API-Export-Amplitude-Dashboard-Data#revenue%C2%A0ltv));
@@ -70,34 +103,96 @@ amplitude = amplitudeAPI('amplitude_config.json')
 - getSessionAvgLength - queries average session length (see [API reference](https://amplitude.zendesk.com/hc/en-us/articles/205469748-Dashboard-Rest-API-Export-Amplitude-Dashboard-Data#average-session-length));
 - getSessionAvgPerUser - returns an average number of induvidual sessions (see [API reference](https://amplitude.zendesk.com/hc/en-us/articles/205469748-Dashboard-Rest-API-Export-Amplitude-Dashboard-Data#average-sessions-per-user));
 
-#### getDataFromExistingDashboard
-?????????????? Examples here
+#### getEvents
+
+The following code will give you a list of all active events for your project:
+
+```python
+events = amplitude.getEvents()
+events = events[~events.non_active] 
+events.name.unique()
+```
+
+#### getDataFromExistingChart
+
+The following code will return a json structure, containing the data from the specified dashboard. 
+
+```python
+amplitude.getDataFromExistingChart(%CHART_ID_STRING%)
+```
+You can obtain %CHART_ID_STRING% by creating a new chart, saving it and copying the id from chart's URL. For example:
+
+```
+https://analytics.amplitude.com/demo/chart/2qsp75u/edit/ouxuadr
+```
+translates into **%CHART_ID_STRING% = ouxuadr**
+
 #### getAnnotations
-?????????????? Examples here
+
+The following code will get a list of Amplitude's data annotations with labels that contain product version information (e.g. v1.0, v2.0, etc):
+
+```python
+amplitude.getAnnotations(labelFilter = '^v[0-9]+\.[0-9]$').sort_values(by = 'startDt')
+```
+Resulting data frame will contain the following fields:
+* startDt - label's date;	
+* finishDt - next label's date minus 1 day; 	
+* duration - difference between finishDt and startDt in days;
+* label - annotation's label; 	
+* details - annotation's description.
+
 #### getUserActivity
-?????????????? Examples here
+
+The following code will return a json, containing 1000 most recent events for %AMPLITUDE_USER_ID_INT% user:
+
+```python
+amplitude.getUserActivity(%AMPLITUDE_USER_ID_INT%)
+```
+
 #### getLTV
-?????????????? Examples here
+```python
+#?????????????? Examples here
+```
 #### getRetention
-?????????????? Examples here
+```python
+#?????????????? Examples here
+```
 #### getFunnel
-?????????????? Examples here
+```python
+#?????????????? Examples here
+```
 #### getEventSegmentation
-?????????????? Examples here
+```python
+#?????????????? Examples here
+```
 #### getEventUniques
-?????????????? Examples here
+```python
+#?????????????? Examples here
+```
 #### getEventTotals
-?????????????? Examples here
+```python
+#?????????????? Examples here
+```
 #### getEventPropSum
-?????????????? Examples here
+```python
+#?????????????? Examples here
+```
 #### getEventFullData
-?????????????? Examples here
+```python
+#?????????????? Examples here
+```
 #### getSessionLengthDistro
-?????????????? Examples here
+```python
+#?????????????? Examples here
+```
 #### getSessionAvgLength
-?????????????? Examples here
+```python
+#?????????????? Examples here
+```
 #### getSessionAvgPerUser
-?????????????? Examples here
+```python
+#?????????????? Examples here
+```
 
 ## Known limitations
 1. The following features are still missing:
