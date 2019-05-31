@@ -142,9 +142,13 @@ Resulting data frame will contain the following fields:
 * details - annotation's description.
 
 #### getUserActivity
+
+The following code will return a json, containing 1000 most recent events for %AMPLITUDE_USER_ID_INT% user:
+
 ```python
-#?????????????? Examples here
+amplitude.getUserActivity(%AMPLITUDE_USER_ID_INT%)
 ```
+
 #### getLTV
 ```python
 #?????????????? Examples here
