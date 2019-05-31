@@ -294,24 +294,26 @@ class amplitudeAPI:
 
 		return pd.DataFrame(response['data'])
 		
-	def getDataFromExistingDashboard(self, dashboardId):
+	def getDataFromExistingChart(self, dashboardId):
 		
 		#getting data from amplitude
 		url = 'https://amplitude.com/api/3/chart/{0}/query'.format(dashboardId)
 		response = self.queryApi(url)
+
+		return response
 	
 		#parsing
-		series = response['data']['series']
-		labels = response['data']['seriesLabels']
-		index = response['data']['xValues']
+		#series = response['data']['series']
+		#labels = response['data']['seriesLabels']
+		#index = response['data']['xValues']
 		
 		#returning pandas dataframe
-		dfResult = pd.DataFrame()
-		for i, label in enumerate(labels):
-			dfResult[label] = [val['value'] for val in series[i]]
-		dfResult['index'] = index
-		dfResult = dfResult.set_index('index')
-		return dfResult
+		#dfResult = pd.DataFrame()
+		#for i, label in enumerate(labels):
+		#	dfResult[label] = [val['value'] for val in series[i]]
+		#dfResult['index'] = index
+		#dfResult = dfResult.set_index('index')
+		#return dfResult
 
 	#returns annotations
 	#default filter is set to major releases by default
@@ -699,7 +701,7 @@ class amplitudeAPI:
 							 segment = None,
 							 groupBy = None,
 							 formula = AMPL_FORMULA_UNIQUES, 		#only a single formula is supported
-							 rollingWindow = None
+							 rollingWindow = None,
 							 rollingAverage = None
 							 ): 
 
