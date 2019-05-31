@@ -115,7 +115,7 @@ events.name.unique()
 
 #### getDataFromExistingChart
 
-The following code will return a json structure, containing the data from the specified dashboard:
+The following code will return a json structure, containing the data from the specified dashboard. 
 
 ```python
 amplitude.getDataFromExistingChart(%CHART_ID_STRING%)
@@ -128,9 +128,19 @@ https://analytics.amplitude.com/demo/chart/2qsp75u/edit/ouxuadr
 translates into **%CHART_ID_STRING% = ouxuadr**
 
 #### getAnnotations
+
+The following code will get a list of Amplitude's data annotations with labels that contain product version information (e.g. v1.0, v2.0, etc):
+
 ```python
-#?????????????? Examples here
+amplitude.getAnnotations(labelFilter = '^v[0-9]+\.[0-9]$').sort_values(by = 'startDt')
 ```
+Resulting data frame will contain the following fields:
+* startDt - label's date;	
+* finishDt - next label's date minus 1 day; 	
+* duration - difference between finishDt and startDt in days;
+* label - annotation's label; 	
+* details - annotation's description.
+
 #### getUserActivity
 ```python
 #?????????????? Examples here
