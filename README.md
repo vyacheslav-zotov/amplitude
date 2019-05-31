@@ -88,7 +88,7 @@ groupByDeviceType = amplitudeUserPropertyGroupBy(['device_type'])
 ### amplitudeAPI methods
 - queryApi - a core method providing all interactions between the library and Amplitude's API
 - getEvents - returns a list of all events available for a given project (see [API reference](https://amplitude.zendesk.com/hc/en-us/articles/205469748-Dashboard-Rest-API-Export-Amplitude-Dashboard-Data#events-list));
-- getDataFromExistingDashboard - returns the data from a pre-defined dashboard (see [API reference](https://amplitude.zendesk.com/hc/en-us/articles/205469748-Dashboard-Rest-API-Export-Amplitude-Dashboard-Data#results-from-an-existing-chart));
+- getDataFromExistingChart - returns the data from a pre-defined chart (see [API reference](https://amplitude.zendesk.com/hc/en-us/articles/205469748-Dashboard-Rest-API-Export-Amplitude-Dashboard-Data#results-from-an-existing-chart));
 - getAnnotations - returns a list of user-defined annotations (see [API reference](https://amplitude.zendesk.com/hc/en-us/articles/205469748-Dashboard-Rest-API-Export-Amplitude-Dashboard-Data#annotations)); 
 - getUserActivity - returns event history for a given user (see [API reference](https://amplitude.zendesk.com/hc/en-us/articles/205469748-Dashboard-Rest-API-Export-Amplitude-Dashboard-Data#user-activity));
 - getLTV - queries LTV data (see [API reference](https://amplitude.zendesk.com/hc/en-us/articles/205469748-Dashboard-Rest-API-Export-Amplitude-Dashboard-Data#revenue%C2%A0ltv));
@@ -103,34 +103,82 @@ groupByDeviceType = amplitudeUserPropertyGroupBy(['device_type'])
 - getSessionAvgLength - queries average session length (see [API reference](https://amplitude.zendesk.com/hc/en-us/articles/205469748-Dashboard-Rest-API-Export-Amplitude-Dashboard-Data#average-session-length));
 - getSessionAvgPerUser - returns an average number of induvidual sessions (see [API reference](https://amplitude.zendesk.com/hc/en-us/articles/205469748-Dashboard-Rest-API-Export-Amplitude-Dashboard-Data#average-sessions-per-user));
 
-#### getDataFromExistingDashboard
-?????????????? Examples here
+#### getEvents
+
+The following code will give you a list of all active events for your project:
+
+```python
+events = amplitude.getEvents()
+events = events[~events.non_active] 
+events.name.unique()
+```
+
+#### getDataFromExistingChart
+
+The following code will return a json structure, containing the data from the specified dashboard:
+
+```python
+amplitude.getDataFromExistingChart(%CHART_ID_STRING%)
+```
+You can obtain %CHART_ID_STRING% by creating a new chart, saving it and copying the id from chart's URL. For example:
+
+```
+https://analytics.amplitude.com/demo/chart/2qsp75u/edit/ouxuadr
+```
+translates into **%CHART_ID_STRING% = ouxuadr**
+
 #### getAnnotations
-?????????????? Examples here
+```python
+#?????????????? Examples here
+```
 #### getUserActivity
-?????????????? Examples here
+```python
+#?????????????? Examples here
+```
 #### getLTV
-?????????????? Examples here
+```python
+#?????????????? Examples here
+```
 #### getRetention
-?????????????? Examples here
+```python
+#?????????????? Examples here
+```
 #### getFunnel
-?????????????? Examples here
+```python
+#?????????????? Examples here
+```
 #### getEventSegmentation
-?????????????? Examples here
+```python
+#?????????????? Examples here
+```
 #### getEventUniques
-?????????????? Examples here
+```python
+#?????????????? Examples here
+```
 #### getEventTotals
-?????????????? Examples here
+```python
+#?????????????? Examples here
+```
 #### getEventPropSum
-?????????????? Examples here
+```python
+#?????????????? Examples here
+```
 #### getEventFullData
-?????????????? Examples here
+```python
+#?????????????? Examples here
+```
 #### getSessionLengthDistro
-?????????????? Examples here
+```python
+#?????????????? Examples here
+```
 #### getSessionAvgLength
-?????????????? Examples here
+```python
+#?????????????? Examples here
+```
 #### getSessionAvgPerUser
-?????????????? Examples here
+```python
+#?????????????? Examples here
+```
 
 ## Known limitations
 1. The following features are still missing:
