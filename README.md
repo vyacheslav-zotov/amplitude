@@ -207,9 +207,30 @@ dfRetention['ret_perc'] = dfRetention.retained / dfRetention.cohort_size
 ```
 
 #### getFunnel
+To get funnel data, you have to define the funnel itself first. Let's say you want to recreate programmatically an onboarding funnel for SF female audience:
+
+![alt text](https://github.com/vyacheslav-zotov/amplitude/blob/master/docs/funnel.jpg "New users only segment")
+
+The funnel definition will look like:
 ```python
-#?????????????? Examples here
+welcome = amplitudeEvent('Welcome')
+welcome.andIs('user', 'Country', ['United%20States'])
+welcome.andIsNot('user', 'Gender', ['Female'])
+onboardingFunnel = [welcome, 
+		    amplitudeEvent('User Sign Up'),
+		    amplitudeEvent('Play Song or Video')
+		   ]
 ```
+
+After that, you can extract funnel's data like this:
+```python
+dfOnboardingFunnel = amplitude.getFunnel(onboardingFunnel,  
+                                         '2019-05-01', '2019-05-07' 
+                                         new = 'new',
+                                         segment = None, 
+                                         groupBy = None)
+```
+
 #### getEventSegmentation
 ```python
 #?????????????? Examples here
