@@ -230,8 +230,17 @@ dfOnboardingFunnel = amplitude.getFunnel(onboardingFunnel,
                                          segment = None, 
                                          groupBy = None)
 ```
+The resulting data frame structure:
+* Segment - a result of groupBy condition. For example, if you group the data by user's country, Segment will contain contry names;	
+* Step - funnel's step name;
+* Unique users 	- absolute numbers of users reached a particular step;
+* % passed - % of initial users, who reached a particular funnel's step;	
+* perc_from_prev - % of retained users from previous step; 	
+* avg_trans_time_min - average inter-step transition time;	
+* Median time between [min] - median inter-step transition time;	
+* horizon_days - funnel's time horizon.
 
-#### getEventSegmentation
+#### getEventSegmentation, getEventUniques, getEventTotals and getEventPropSum
 ```python
 #?????????????? Examples here
 ```
