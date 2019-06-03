@@ -104,7 +104,6 @@ groupByDeviceType = amplitudeUserPropertyGroupBy(['device_type'])
 - getSessionAvgPerUser - returns an average number of induvidual sessions (see [API reference](https://amplitude.zendesk.com/hc/en-us/articles/205469748-Dashboard-Rest-API-Export-Amplitude-Dashboard-Data#average-sessions-per-user));
 
 #### getEvents
-
 The following code will give you a list of all active events for your project:
 
 ```python
@@ -114,7 +113,6 @@ events.name.unique()
 ```
 
 #### getDataFromExistingChart
-
 The following code will return a json structure, containing the data from the specified dashboard. 
 
 ```python
@@ -128,7 +126,6 @@ https://analytics.amplitude.com/demo/chart/2qsp75u/edit/ouxuadr
 translates into **%CHART_ID_STRING% = ouxuadr**
 
 #### getAnnotations
-
 The following code will get a list of Amplitude's data annotations with labels that contain product version information (e.g. v1.0, v2.0, etc):
 
 ```python
@@ -142,7 +139,6 @@ Resulting data frame will contain the following fields:
 * details - annotation's description.
 
 #### getUserActivity
-
 The following code will return a json, containing 1000 most recent events for %AMPLITUDE_USER_ID_INT% user:
 
 ```python
@@ -150,18 +146,101 @@ amplitude.getUserActivity(%AMPLITUDE_USER_ID_INT%)
 ```
 
 #### getLTV
+The following code snippet will return two dataframes - one for ARPPU data and another one containing conversion stats:
+
 ```python
-#?????????????? Examples here
+dfARPPU, dfConv = amplitude.getLTV('2019-05-01', '2019-05-07', segment = None, groupBy = None)
 ```
+
+Both data frames have almost identical structure:
+* segment - a result of groupBy condition. For example, if you group the data by user's country, Segment will contain contry names;
+* dt - new user aquisition date;
+* age - days since user aquisition day;
+* cohort_size - number of new users, aquired at a particular day;	
+* payers - number of paying users within a cohort (within 30 days since the initial aquisition day);	
+* rev_ppu - average revenue per paying user at a given age (tot_rev/payers);
+* tot_rev - total cumulative revenue at a given age;
+* new_payers - number of users, who converted at a given age;	
+* conv - total number of converted users at a given age;
+* completed - whether 30 days passed since the initial aquisition day.
+
+You can turn asbolute numbers into aggregates and percents by grouping the dataframe like this:
+```python
+dfARPPU = dfARPPU.groupby('age').agg({'cohort_size': 'sum', 
+                                      'payers': 'sum', 
+                                      'tot_rev': 'sum', 
+                                      'completed': 'min'})
+dfARPPU = dfARPPU[dfARPPU.completed]
+dfARPPU['rev_ppu'] = dfARPPU.tot_rev / dfARPPU.payers	
+
+dfConv = dfConv.groupby('age').agg({'cohort_size': 'sum', 
+                                    'payers': 'sum', 
+                                    'conv': 'sum', 
+                                    'completed': 'min'})
+dfConv = dfConv[dfConv.completed]
+dfConv['conv_perc'] = dfConv.conv / dfConv.cohort_size				 
+```
+
+
 #### getRetention
+The following code will return a data frame, containing retention information:
+
 ```python
-#?????????????? Examples here
+dfRetention = amplitude.getRetention('2019-05-01', '2019-05-07', segment = None, groupBy = None)
 ```
+The structure of the resulting data frame:
+* segment - a result of groupBy condition. For example, if you group the data by user's country, Segment will contain contry names;
+* dt - new user aquisition date;
+* age - days since user aquisition day;	
+* retained - number of users retained at a given age;	
+* cohort_size - number of new users, aquired at a particular day;
+* completed - whether 30 days passed since the initial aquisition day.
+
+You can than turn asbolute numbers into aggregates and percents by grouping the dataframe like this:
+
+```python
+dfRetention = dfRetention.groupby('age').agg({'cohort_size': 'sum', 
+                                              'retained': 'sum', 
+                                              'completed': 'min'})
+dfRetention = dfRetention[dfRetention.completed]
+dfRetention['ret_perc'] = dfRetention.retained / dfRetention.cohort_size					      
+```
+
 #### getFunnel
+To get funnel data, you have to define the funnel itself first. Let's say you want to recreate programmatically an onboarding funnel for SF female audience:
+
+![alt text](https://github.com/vyacheslav-zotov/amplitude/blob/master/docs/funnel.jpg "New users only segment")
+
+The funnel definition will look like:
 ```python
-#?????????????? Examples here
+welcome = amplitudeEvent('Welcome')
+welcome.andIs('user', 'Country', ['United%20States'])
+welcome.andIsNot('user', 'Gender', ['Female'])
+onboardingFunnel = [welcome, 
+		    amplitudeEvent('User Sign Up'),
+		    amplitudeEvent('Play Song or Video')
+		   ]
 ```
-#### getEventSegmentation
+
+After that, you can extract funnel's data like this:
+```python
+dfOnboardingFunnel = amplitude.getFunnel(onboardingFunnel,  
+                                         '2019-05-01', '2019-05-07' 
+                                         new = 'new',
+                                         segment = None, 
+                                         groupBy = None)
+```
+The resulting data frame structure:
+* Segment - a result of groupBy condition. For example, if you group the data by user's country, Segment will contain contry names;	
+* Step - funnel's step name;
+* Unique users 	- absolute numbers of users reached a particular step;
+* % passed - % of initial users, who reached a particular funnel's step;	
+* perc_from_prev - % of retained users from previous step; 	
+* avg_trans_time_min - average inter-step transition time;	
+* Median time between [min] - median inter-step transition time;	
+* horizon_days - funnel's time horizon.
+
+#### getEventSegmentation, getEventUniques, getEventTotals and getEventPropSum
 ```python
 #?????????????? Examples here
 ```
