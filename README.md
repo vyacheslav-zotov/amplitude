@@ -240,26 +240,103 @@ The resulting data frame structure:
 * Median time between [min] - median inter-step transition time;	
 * horizon_days - funnel's time horizon.
 
-#### getEventSegmentation, getEventUniques, getEventTotals and getEventPropSum
-```python
-#?????????????? Examples here
-```
 #### getEventUniques
+
+The following code will return unique users, who performed at least one event 'Purchase Song or Video' within a particular month:
 ```python
-#?????????????? Examples here
+event = amplitudeEvent('Purchase Song or Video')
+event.groupBy('user', 'platform')                
+event.andIs('user', 'Country', ['Japan'])        
+
+result = amplitude.getEventUniques(event, 
+                                    '2019-01-01', '2019-05-31',
+                                    frequency = AMPL_FREQ_MONTHLY,
+                                    segment = None, 
+                                    groupBy = amplitudeUserPropertyGroupBy(['country'])   
+                                   ) 
 ```
+
 #### getEventTotals
+
+The following code will return total montly numbers of 'Purchase Song or Video' event:
+
 ```python
-#?????????????? Examples here
+event = amplitudeEvent('Purchase Song or Video')
+event.groupBy('user', 'platform')                
+event.andIs('user', 'Country', ['Japan'])        
+
+result = amplitude.getEventTotals(event, 
+                                  '2019-01-01', '2019-05-31',
+                                  frequency = AMPL_FREQ_MONTHLY,
+                                  segment = None, 
+                                  groupBy = amplitudeUserPropertyGroupBy(['country'])   
+                                  ) 
 ```
 #### getEventPropSum
 ```python
 #?????????????? Examples here
 ```
+
 #### getEventFullData
+
+You can use getEventFullData in two different ways. The following code will return daily uniques users generated 'Purchase Song or Video' as well as daily total events:
+
 ```python
-#?????????????? Examples here
+event = amplitudeEvent('Purchase Song or Video')
+event.groupBy('user', 'platform')                #won't be ignored
+event.andIs('user', 'Country', ['Japan'])        #won't be ignored
+
+result = amplitude.getEventFullData(event, 
+                                    '2019-05-01', '2019-05-07',
+                                    frequency = AMPL_FREQ_DAILY,
+                                    sumProperty = None,
+                                    groupProperty = ['user', 'device_type'],              #will be ignored
+                                    segment = None, 
+                                    groupBy = amplitudeUserPropertyGroupBy(['country'])   #won't be ignored
+                                   ) 
 ```
+However, if you need to add daily sums across a particular event property, you should apply group by conditions in a different way:
+
+```python
+event = amplitudeEvent('Purchase Song or Video')
+event.groupBy('user', 'platform')                #will be ignored
+event.andIs('user', 'Country', ['Japan'])        #won't be ignored
+
+result = amplitude.getEventFullData(event, 
+                                    '2019-05-01', '2019-05-07',
+                                    frequency = AMPL_FREQ_DAILY,
+                                    sumProperty = ['event', '$revenue'],
+                                    groupProperty = ['user', 'device_type'],              #won't be ignored
+                                    segment = None, 
+                                    groupBy = amplitudeUserPropertyGroupBy(['country'])   #won't be ignored
+                                   ) 
+```
+The resulting dataset will containg the following structure:
+* Segment - a result of groupBy conditions;	
+* x - date; 	
+* Unique users - number of uniqie users performed the specified event;
+* Total events - total number of events;
+* %sumProperty% - a column containing the results of sumProperty condition.
+
+
+#### getEventSegmentation
+
+In fact all the above methods are based on getEventSegmentation, which allows you to apply different kind of formulas to event segmentation data. For example:
+
+```python
+event = amplitudeEvent('Purchase Song or Video')
+event.groupBy('user', 'platform')                
+event.andIs('user', 'Country', ['Japan'])
+
+result = amplitude.getEventSegmentation(event, 
+                                        '2019-05-01', '2019-05-31',
+                                        frequency = AMPL_FREQ_DAILY,
+                                        segment = None, 
+                                        groupBy = amplitudeUserPropertyGroupBy(['country']),
+					formula = 'AVG(A)')
+```
+Applying UNIQUES(A) is equivalent to getEventUniques, TOTALS(A) to getEventTotals and PROPSUM(A) to getEventPropSum. Finally getEventFullData simply calls getEventSegmentation 2 or 3 times with diffrent formula arguments and combines the resulting dataframes into a single piece of data.
+
 #### getSessionLengthDistro
 ```python
 #?????????????? Examples here
