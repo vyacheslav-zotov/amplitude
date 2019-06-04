@@ -273,8 +273,19 @@ result = amplitude.getEventTotals(event,
                                   ) 
 ```
 #### getEventPropSum
+The following code will return total montly revenue, received from 'Purchase Song or Video' events, grouped by month and country:
+
 ```python
-#?????????????? Examples here
+event = amplitudeEvent('Purchase Song or Video') 
+
+result = amplitude.getEventPropSum(event, 
+                                  '2019-01-01', '2019-05-31',
+                                  sumProperty = ['event', '$revenue'], #property to be summed
+                                  groupProperty = None,                #additional groupping on event level 
+                                  frequency = AMPL_FREQ_MONTHLY,
+                                  segment = None, 
+                                  groupBy = amplitudeUserPropertyGroupBy(['country'])   
+                                  ) 
 ```
 
 #### getEventFullData
