@@ -349,17 +349,48 @@ result = amplitude.getEventSegmentation(event,
 Applying UNIQUES(A) is equivalent to getEventUniques, TOTALS(A) to getEventTotals and PROPSUM(A) to getEventPropSum. Finally getEventFullData simply calls getEventSegmentation 2 or 3 times with diffrent formula arguments and combines the resulting dataframes into a single piece of data.
 
 #### getSessionLengthDistro
+
+The following code will return a set of histograms for user's session lengths across different device types:
+
 ```python
-#?????????????? Examples here
+result = amplitude.getSessionLengthDistro('2019-05-01', '2019-05-07',
+                                          segment = None,
+                                          groupBy = amplitudeUserPropertyGroupBy(['device_type']))
 ```
+Resulting dataframe structure:
+
+* Segment - a result of groupBy conditions;	
+* Duration - session duration bucket name;	
+* Sessions - number of sessions within a particular bucket;
+* % of total - % of total sessions within a particular bucket.
+
 #### getSessionAvgLength
+
+The following code will return daily average session lengths across different device types:
+
 ```python
-#?????????????? Examples here
+result = amplitude.getSessionAvgLength('2019-05-01', '2019-05-07',
+                                       segment = None,
+                                       groupBy = amplitudeUserPropertyGroupBy(['device_type']))
 ```
+Resulting dataframe structure:
+* Segment - a result of groupBy conditions; 	
+* Date;
+* Avg session length [sec].
+
 #### getSessionAvgPerUser
+
+The following code will return daily average sessions per an individual user:
+
 ```python
-#?????????????? Examples here
+result = amplitude.getSessionAvgPerUser('2019-05-01', '2019-05-07',
+                                        segment = None,
+                                        groupBy = amplitudeUserPropertyGroupBy(['device_type']))
 ```
+Resulting dataframe structure:
+* Segment - a result of groupBy conditions; 	
+* Date;
+* Avg session per user [sec].
 
 ## Known limitations
 1. The following features are still missing:
